@@ -46,7 +46,7 @@
 17 silly publish   keywords: [ 'gruntplugin', 'copy', 'modified', 'grunt' ],
 17 silly publish   readme: '# grunt-copy-modified [![NPM version](https://badge.fury.io/js/grunt-copy-modified.png)](http://badge.fury.io/js/grunt-copy-modified)\n\n\n> Grunt copy plugin, only copy modified files. using [node-glob](https://github.com/isaacs/node-glob)!\n\n## Getting Started\nThis plugin requires Grunt `~0.4.5`\n\nIf you haven\'t used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you\'re familiar with that process, you may install this plugin with this command:\n\n```shell\nnpm install grunt-copy-modified --save-dev\n```\n\nOnce the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:\n\n```js\ngrunt.loadNpmTasks(\'grunt-copy-modified\');\n```\n\n## The "copy_modified" task\n\n### Overview\nIn your project\'s Gruntfile, add a section named `copy_modified` to the data object passed into `grunt.initConfig()`.\n\n```js\ngrunt.initConfig({\n\tcopy_modified: {\n\t\tyour_target: {\n\t\t\tfiles: [{\n\t\t\t\t\tsrc: [\'path/**/*.js\', \'path/**/*.css\'],\n\t\t\t\t\tdest: \'dest/\',\n\t\t\t\t\tignore: [\'**/*.less\', \'**/*.scss\', \'**/*.coffee\']\n\t\t\t\t}, // includes files in path and its subdirs\n\t\t\t\t{\n\t\t\t\t\tcwd: \'path\',\n\t\t\t\t\tsrc: [\'**/*.js\', \'**/*.css\'],\n\t\t\t\t\tdest: \'dest\',\n\t\t\t\t\tignore: [\'**/*.less\', \'**/*.scss\']\n\t\t\t\t} // makes all src relative to cwd \n\t\t\t],\n\t\t\tverbose: true,\n\t\t\texpand: true,\n\t\t\tdebug: false,\n\t\t\tdot: false,\n\t\t\tnodir: true\n\t\t}\n\t},\n});\n```\n\n### Usage Examples\n\n```js\ngrunt.initConfig({\n\tcopy_modified: {\n\t\tyour_target: {\n\t\t\tfiles: [{\n\t\t\t\t\tcwd: \'dev\',\n\t\t\t\t\tsrc: [\'**/*.js\', \'**/*.css\', \'**/*.html\'],\n\t\t\t\t\tdest: \'dest\',\n\t\t\t\t\tignore: [\'**/*.less\', \'**/*.scss\', \'**/*.coffee\']\n\t\t\t\t} // makes all src relative to cwd \n\t\t\t],\n\t\t\tverbose: false,\n\t\t\texpand: true,\n\t\t\tdebug: false,\n\t\t\tdot: false,\n\t\t\tnodir: true\n\t\t}\n\t},\n});\n```\n\n## Contributing\nIn lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).\n\n## Release History\n_(Nothing yet)_\n',
 17 silly publish   readmeFilename: 'README.md',
-17 silly publish   gitHead: '417d3f7a691258ff713a666a837745b31dcd6bb3',
+17 silly publish   gitHead: '4ad86b0d16de4dd5c66fa2f8dd998401b6050148',
 17 silly publish   _id: 'grunt-copy-modified@0.1.1',
 17 silly publish   _shasum: 'b9e338d70741036ed21bc72b3622de3a52437d2f',
 17 silly publish   _from: '.' }
@@ -59,48 +59,44 @@
 24 silly publish uploading /Users/terry/.npm/grunt-copy-modified/0.1.1/package.tgz
 25 verbose request uri https://registry.npmjs.org/grunt-copy-modified
 26 verbose request sending authorization for write operation
-27 info attempt registry request try #1 at 10:14:32 PM
+27 info attempt registry request try #1 at 10:16:48 PM
 28 verbose request using bearer token for auth
-29 verbose request id 3239379b3c3abaa4
+29 verbose request id 2a99124a1d27d042
 30 http request PUT https://registry.npmjs.org/grunt-copy-modified
-31 info retry will retry, error on last attempt: Error: socket hang up
-32 info attempt registry request try #2 at 10:15:44 PM
-33 verbose request using bearer token for auth
-34 http request PUT https://registry.npmjs.org/grunt-copy-modified
-35 http 403 https://registry.npmjs.org/grunt-copy-modified
-36 verbose headers { 'content-type': 'application/json',
-36 verbose headers   'cache-control': 'max-age=60',
-36 verbose headers   'content-length': '95',
-36 verbose headers   'accept-ranges': 'bytes',
-36 verbose headers   date: 'Sat, 31 Oct 2015 14:15:45 GMT',
-36 verbose headers   via: '1.1 varnish',
-36 verbose headers   connection: 'keep-alive',
-36 verbose headers   'x-served-by': 'cache-hkg6824-HKG',
-36 verbose headers   'x-cache': 'MISS',
-36 verbose headers   'x-cache-hits': '0',
-36 verbose headers   'x-timer': 'S1446300944.694734,VS0,VE767' }
-37 verbose request invalidating /Users/terry/.npm/registry.npmjs.org/grunt-copy-modified on PUT
-38 error publish Failed PUT 403
-39 verbose stack Error: "You cannot publish over the previously published version 0.1.1." : grunt-copy-modified
-39 verbose stack     at makeError (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:264:12)
-39 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:252:14)
-39 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:172:14)
-39 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:198:22)
-39 verbose stack     at emitTwo (events.js:87:13)
-39 verbose stack     at Request.emit (events.js:172:7)
-39 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1063:14)
-39 verbose stack     at emitOne (events.js:82:20)
-39 verbose stack     at Request.emit (events.js:169:7)
-39 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1009:12)
-40 verbose statusCode 403
-41 verbose pkgid grunt-copy-modified
-42 verbose cwd /Users/terry/Documents/GitProjects/grunt-copy-modified
-43 error Darwin 15.0.0
-44 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "publish"
-45 error node v4.2.1
-46 error npm  v2.14.7
-47 error code E403
-48 error "You cannot publish over the previously published version 0.1.1." : grunt-copy-modified
-49 error If you need help, you may report this error at:
-49 error     <https://github.com/npm/npm/issues>
-50 verbose exit [ 1, true ]
+31 http 403 https://registry.npmjs.org/grunt-copy-modified
+32 verbose headers { 'content-type': 'application/json',
+32 verbose headers   'cache-control': 'max-age=60',
+32 verbose headers   'content-length': '95',
+32 verbose headers   'accept-ranges': 'bytes',
+32 verbose headers   date: 'Sat, 31 Oct 2015 14:16:50 GMT',
+32 verbose headers   via: '1.1 varnish',
+32 verbose headers   connection: 'keep-alive',
+32 verbose headers   'x-served-by': 'cache-hkg6825-HKG',
+32 verbose headers   'x-cache': 'MISS',
+32 verbose headers   'x-cache-hits': '0',
+32 verbose headers   'x-timer': 'S1446301009.242375,VS0,VE788' }
+33 verbose request invalidating /Users/terry/.npm/registry.npmjs.org/grunt-copy-modified on PUT
+34 error publish Failed PUT 403
+35 verbose stack Error: "You cannot publish over the previously published version 0.1.1." : grunt-copy-modified
+35 verbose stack     at makeError (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:264:12)
+35 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:252:14)
+35 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:172:14)
+35 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:198:22)
+35 verbose stack     at emitTwo (events.js:87:13)
+35 verbose stack     at Request.emit (events.js:172:7)
+35 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1063:14)
+35 verbose stack     at emitOne (events.js:82:20)
+35 verbose stack     at Request.emit (events.js:169:7)
+35 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1009:12)
+36 verbose statusCode 403
+37 verbose pkgid grunt-copy-modified
+38 verbose cwd /Users/terry/Documents/GitProjects/grunt-copy-modified
+39 error Darwin 15.0.0
+40 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "publish"
+41 error node v4.2.1
+42 error npm  v2.14.7
+43 error code E403
+44 error "You cannot publish over the previously published version 0.1.1." : grunt-copy-modified
+45 error If you need help, you may report this error at:
+45 error     <https://github.com/npm/npm/issues>
+46 verbose exit [ 1, true ]
