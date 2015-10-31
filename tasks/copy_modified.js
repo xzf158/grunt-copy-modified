@@ -9,57 +9,79 @@
 'use strict';
 module.exports = function (grunt) {
 	var glob = require("glob"),
-		fs = require('fs-extra'),
 		path = require('path'),
 		md5 = require('md5-file');
 
 	grunt.registerMultiTask('copy_modified', 'Grunt copy plugin, only copy modified files', function () {
-		// Merge task-specific and/or target-specific options with these defaults.
-		var options = this.options({
-			files: [{
-				expand: true,
-				dot: false,
-				cwd: '',
-				src: [
-					'**/*.*',
-					'!**/*.less',
-					'!**/*.coffee'
-				],
-				dest: ''
-			}]
-		});
+		var done = this.async();
+		var scope = this;
+		this.files = grunt.util.kindOf(this.files) === 'array' ? this.files : [this.files];
+		var verbose = !!this.data.verbose;
+		var debug = !!this.data.debug;
+		copyModified(0, copyModified);
 
-		grunt.verbose.writeflags(options, 'Options');
-		console.log(options.files);
-		return;
-		// Tell Grunt this task is asynchronous.
-		// var done = this.async();
-		glob('{js/lib/*.js,styles/**/*.css}', {
-				cwd: src,
-				nodir: true,
-				dot: false,
-				nonull: true,
-				// ignore: ['**/*.map', '**/*.less', '**/*.coffee']
-			},
-			function (er, files) {
-				// files is an array of filenames.
-				// If the `nonull` option is set, and nothing
-				// was found, then files is ["**/*.js"]
-				// er is an error object or null.
-				console.log(files);
-				for (var i = 0, il = files.length; i < il; i++) {
-					var srcPath = path.resolve(src, files[i]);
-					var newerPath = path.resolve(newer, files[i]);
-					var filemd5 = md5(srcPath);
-					if (filesMd5[files[i]] !== filemd5) {
-						fs.ensureFileSync(newerPath);
-						filesMd5[files[i]] = filemd5;
-						fs.copySync(srcPath, newerPath);
-						console.log(srcPath + ' -> ' + newerPath);
+		function copyModified(index, next) {
+			if (!scope.files[index]) {
+				done();
+				return;
+			}
+			var orig = scope.files[index].orig;
+			var patterns = grunt.util.kindOf(orig.src) === 'array' ? (orig.src.length > 1 ? '{' + orig.src.join(',') + '}' : orig.src[0]) : orig.src;
+			var dest = orig.dest;
+			var cwd = orig.cwd ? orig.cwd : '.';
+
+			var ignore = orig.ignore;
+			if (debug) {
+				grunt.log.subhead('Start index: ' + index);
+				grunt.log.writeln('patterns: ', patterns);
+				grunt.log.writeln('cwd: ', cwd);
+				grunt.log.writeln('ignore: ', ignore);
+				grunt.log.writeln('nodir: ', !!scope.data.nodir);
+				grunt.log.writeln('dot: ', !!scope.data.dot);
+				grunt.log.writeln('expand: ', !!scope.data.expand);
+				grunt.log.writeln('dest: ', dest);
+			}
+			glob(patterns, {
+					cwd: cwd,
+					nodir: !!scope.data.nodir,
+					dot: !!scope.data.dot,
+					expand: !!scope.data.expand,
+					ignore: ignore
+				},
+				function (err, files) {
+					if (err) {
+						grunt.fail.warn(err);
+						index++;
+						if (typeof next === 'function') {
+							next(index, next);
+						}
+						return;
 					}
-				}
-				fs.outputJson('.filesmd5', filesMd5);
-			});
-		// done();
+					var filesmd5 = path.resolve('.', ".filesmd5");
+					var filesMd5;
+					try {
+						filesMd5 = grunt.file.readJSON(filesmd5);
+					} catch (e) {
+						filesMd5 = {};
+					}
+					for (var i = 0, il = files.length; i < il; i++) {
+						var srcPath = path.resolve(cwd, files[i]);
+						var newerPath = path.resolve(dest, files[i]);
+						var filemd5 = md5(srcPath);
+						if (filesMd5[files[i]] !== filemd5) {
+							filesMd5[files[i]] = filemd5;
+							grunt.file.copy(srcPath, newerPath);
+							if (verbose || debug) {
+								grunt.log.ok(srcPath + ' -> ' + newerPath);
+							}
+						}
+					}
+					grunt.file.write(filesmd5, JSON.stringify(filesMd5));
+					index++;
+					if (typeof next === 'function') {
+						next(index, next);
+					}
+				});
+		}
 	});
 };

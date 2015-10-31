@@ -3,3 +3,4 @@ newer/
 origin_index.js
 node_modules/
 test/
+.filesmd5
