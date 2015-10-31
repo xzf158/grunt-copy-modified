@@ -1,6 +1,6 @@
 /*
- * grunt-request-upload
- * https://github.com/xzf158/grunt-request-upload
+ * grunt-copy-modified
+ * https://github.com/xzf158/grunt-copy-modified
  *
  * Copyright (c) 2015 Terry Xu
  * Licensed under the MIT license.
