@@ -37,15 +37,15 @@ module.exports = function (grunt) {
 						ignore: ['**/*.less', '**/*.scss', '**/*.coffee']
 					}, // includes files in path and its subdirs
 					{
-						cwd: '/Users/terry/Documents/GitProjects/NYT_Aetna_Sponsored_Page/toClient/dev',
+						cwd: 'path',
 						src: ['**/*.js', '**/*.css'],
-						dest: 'dest1/',
+						dest: 'dest',
 						ignore: ['**/*.less', '**/*.scss']
 					} // makes all src relative to cwd 
 				],
 				verbose: true,
 				expand: true,
-				// debug: true,
+				debug: false,
 				dot: false,
 				nodir: true
 			}
@@ -76,3 +76,27 @@ module.exports = function (grunt) {
 	grunt.registerTask('dev', ['clean', 'copy_modified:default_options']);
 
 };
+
+grunt.initConfig({
+	copy_modified: {
+		default_options: {
+			files: [{
+					src: ['path/**/*.js', 'path/**/*.css'],
+					dest: 'dest/',
+					ignore: ['**/*.less', '**/*.scss', '**/*.coffee']
+				}, // includes files in path and its subdirs
+				{
+					cwd: 'path',
+					src: ['**/*.js', '**/*.css'],
+					dest: 'dest',
+					ignore: ['**/*.less', '**/*.scss']
+				} // makes all src relative to cwd 
+			],
+			verbose: true,
+			expand: true,
+			debug: false,
+			dot: false,
+			nodir: true
+		}
+	},
+});
