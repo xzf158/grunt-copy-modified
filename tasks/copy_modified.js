@@ -15,17 +15,18 @@ module.exports = function (grunt) {
 	grunt.registerMultiTask('copy_modified', 'Grunt copy plugin, only copy modified files', function () {
 		var done = this.async();
 		var scope = this;
-		this.files = grunt.util.kindOf(this.files) === 'array' ? this.files : [this.files];
+		this.data.files = grunt.util.kindOf(this.data.files) === 'array' ? this.data.files : [this.data.files];
 		var verbose = !!this.data.verbose;
 		var debug = !!this.data.debug;
 		copyModified(0, copyModified);
+		// console.log(scope.data);
 
 		function copyModified(index, next) {
-			if (!scope.files[index]) {
+			if (!scope.data.files[index]) {
 				done();
 				return;
 			}
-			var orig = scope.files[index].orig;
+			var orig = scope.data.files[index];
 			var patterns = grunt.util.kindOf(orig.src) === 'array' ? (orig.src.length > 1 ? '{' + orig.src.join(',') + '}' : orig.src[0]) : orig.src;
 			var dest = orig.dest;
 			var cwd = orig.cwd ? orig.cwd : '.';
